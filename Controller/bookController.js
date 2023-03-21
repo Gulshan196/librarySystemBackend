@@ -1,4 +1,4 @@
-const bookModel = require("./Model/bookSchema");
+const bookModel = require("../Model/bookSchema");
 class Book{
     constructor(){}
 
@@ -27,6 +27,21 @@ class Book{
         res.send(err);
       }
     }
+
+    static getAllBooks = async(req,res) => {
+      try
+      {
+        const books = await bookModel.find();
+      res.send(books);
+
+      }
+      catch(err){
+        res.status(500).send(err);
+      }
+      
+      }
+      
 }
+
 
 module.exports = Book;
