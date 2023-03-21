@@ -3,7 +3,7 @@ const studentModel = require("../Model/studentModel");
 const teacherModel = require("../Model/teacherModel");
 const bcrypt = require("bcrypt");
 const bookModel = require("../Model/bookSchema");
-
+var session;
 
 class Student{
     constructor(){
@@ -69,18 +69,19 @@ class Student{
      
      const isMatch = await bcrypt.compare(password,studentdata.password);
      if(rollNo === studentdata.rollNo && isMatch){
-       
-       req.session.userid=req.body.rollNo;
-       req.session.role = 'student';
-       console.log(req.session);
-       res.send("login successfull");
+       session = req.session;
+       session.userid=req.body.rollNo;
+       session.role = 'student';
+       console.log(req.session,'user session');
+
+       res.status(201).json({status:201,studentdata});
      }
      else {
-       res.status(500).send("invalid credentials");
+       res.send("invalid credentials");
      }
      }
      else{
-     res.status(500).send("student does not exit");
+     res.send("student does not exit");
      }
         }
         catch(err) {
@@ -101,11 +102,16 @@ class Student{
        const {title} = req.body;
 
        const book = await bookModel.findOne({title:title});
-
        if(book.isAvailable){
          const student = await studentModel.findOne({rollNo:req.session.userid});
-         student.permission = true;
-         student.requestedBook = book._id;
+         if (student.borrowedBooks.length==0){
+          student.permission = true;
+          student.requestedBook = book._id;
+         }
+         else{
+      res.send("you already have a book");
+         }
+      
 
          await student.save();
 
@@ -115,6 +121,10 @@ class Student{
        }
       console.log(book);
       res.send(book);
+    }
+
+    static returnBook = async(req,res)=> {
+
     }
 }
 

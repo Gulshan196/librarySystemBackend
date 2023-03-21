@@ -51,7 +51,7 @@ if(teacherId === teacherdata.teacherId && isMatch){
   req.session.userid=req.body.teacherId;
   req.session.role = 'teacher';
   console.log(req.session);
-  res.send("login successfull");
+  res.status(201).json({status:201,teacherdata});
 }
 else {
   res.status(500).send("invalid credentials");
@@ -107,6 +107,23 @@ res.status(500).send("teacher does not exit");
    else {
     res.send('student not exists');
    }
+  }
+
+  static getTeacherInfo = async(req,res) => {
+    const {teacherId} = req.body;
+
+    if (!teacherId) {
+      res.send('please provide student id');
+    }
+
+    try{
+     const teacher = await teacherModel.findOne({teacherId:teacherId});
+
+     res.send(teacher);
+    }
+    catch(err){
+   res.status(500).send(err);
+    }
   }
 
 }

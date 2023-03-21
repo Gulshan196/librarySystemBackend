@@ -5,7 +5,7 @@ class Authorization {
           if (req.session.role === role) {
             next();
           } else {
-            res.status(403).send("Access denied");
+            res.send("Access denied");
           }
         }
       } 
