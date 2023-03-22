@@ -114,13 +114,13 @@ class Student{
       
 
          await student.save();
-
-;       }
+         console.log(book);
+      res.status(201).send({status:201,book:book});
+       }
        else {
         res.send('out of stock');
        }
-      console.log(book);
-      res.status(201).send({status:201,book:book});
+      
     }
 
     static returnBook = async(req,res)=> {
