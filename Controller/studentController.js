@@ -120,7 +120,7 @@ class Student{
         res.send('out of stock');
        }
       console.log(book);
-      res.send(book);
+      res.status(201).send({status:201,book:book});
     }
 
     static returnBook = async(req,res)=> {
