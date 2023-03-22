@@ -73,7 +73,7 @@ res.status(500).send("teacher does not exit");
   }
 
   static grantAccess = async(req,res) => {
-   const {rollNo} = req.body;
+   const {rollNo} = req.params;
 
    const student = await studentModel.findOne({rollNo:rollNo});
 
@@ -110,20 +110,29 @@ res.status(500).send("teacher does not exit");
   }
 
   static getTeacherInfo = async(req,res) => {
-    const {teacherId} = req.body;
-
-    if (!teacherId) {
-      res.send('please provide student id');
-    }
-
-    try{
-     const teacher = await teacherModel.findOne({teacherId:teacherId});
-
-     res.send(teacher);
-    }
-    catch(err){
-   res.status(500).send(err);
-    }
+    const {teacherId} = req.params;
+    let arr = []
+ 
+     if (!teacherId) {
+       res.send('please provide teacher id');
+     }
+ 
+     try{
+      const teacher = await teacherModel.findOne({teacherId:teacherId});
+      
+  
+      for(let i = 0;i<teacher.students.length;i++){
+       const data = await studentModel.findOne({_id : teacher.students[i]})
+       arr.push(data)
+      }
+      res.send({teacherdata : teacher , studentdata : arr});
+   
+ 
+   
+     }
+     catch(err){
+    res.status(500).send(err);
+     }
   }
 
 }

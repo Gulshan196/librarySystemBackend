@@ -9,6 +9,6 @@ router.post('/login',Student.login);
 
 router.post('/logout',Student.logout);
 
-router.put('/ask',Authorization.checkRole('student'),Student.askPermission);
+router.put('/ask',Student.askPermission);
 
 module.exports = router;

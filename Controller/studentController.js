@@ -99,11 +99,11 @@ class Student{
 
     }
     static askPermission = async(req,res) => {
-       const {title} = req.body;
+       const {title,rollNo} = req.body;
 
        const book = await bookModel.findOne({title:title});
        if(book.isAvailable){
-         const student = await studentModel.findOne({rollNo:req.session.userid});
+         const student = await studentModel.findOne({rollNo:rollNo});
          if (student.borrowedBooks.length==0){
           student.permission = true;
           student.requestedBook = book._id;

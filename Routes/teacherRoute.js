@@ -5,11 +5,11 @@ const router = express.Router();
 
 router.post('/add', Teacher.addTeacher);
 
-router.get('/grant', Authorization.checkRole('teacher'),Teacher.grantAccess);
+router.get('/grant/:rollNo',Teacher.grantAccess);
 
 router.post('/login',Teacher.login);
 
 router.post('/logout',Teacher.logout);
 
-router.get('/info',Teacher.getTeacherInfo);
+router.get('/info/:teacherId',Teacher.getTeacherInfo);
 module.exports = router;
