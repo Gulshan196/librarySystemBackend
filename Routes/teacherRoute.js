@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/add', Teacher.addTeacher);
 
-router.get('/grant/:rollNo',Teacher.grantAccess);
+router.get('/grant/:rollNo',Authorization.checkRole('teacher'),Teacher.grantAccess);
 
 router.post('/login',Teacher.login);
 
