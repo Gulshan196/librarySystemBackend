@@ -33,7 +33,7 @@ const teacherRouter = require('./Routes/teacherRoute');
 const studentRouter = require('./Routes/studentRoute');
 
 var corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: '*',
   credentials: true };
 
 
