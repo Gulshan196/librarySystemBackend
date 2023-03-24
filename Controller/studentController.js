@@ -57,8 +57,9 @@ class Student{
 
     static login = async(req,res) => {
         const {rollNo , password} = req.body;
+        console.log(req.body);
         if(!rollNo || !password) {
-         res.send("please enter all the required fields");
+         res.send({message:"please enter all the required fields"});
         }
      
         try{
@@ -72,16 +73,17 @@ class Student{
        session = req.session;
        session.userid=req.body.rollNo;
        session.role = 'student';
+       session.save();
        console.log(req.session,'user session');
 
        res.status(201).json({status:201,studentdata});
      }
      else {
-       res.send("invalid credentials");
+       res.send({message:"invalid credentials"});
      }
      }
      else{
-     res.send("student does not exit");
+     res.send({message:"student does not exit"});
      }
         }
         catch(err) {
