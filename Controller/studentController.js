@@ -3,7 +3,6 @@ const studentModel = require("../Model/studentModel");
 const teacherModel = require("../Model/teacherModel");
 const bcrypt = require("bcrypt");
 const bookModel = require("../Model/bookSchema");
-var session;
 
 class Student{
     constructor(){
@@ -70,11 +69,10 @@ class Student{
      
      const isMatch = await bcrypt.compare(password,studentdata.password);
      if(rollNo === studentdata.rollNo && isMatch){
-       session = req.session;
-       session.userid=req.body.rollNo;
-       session.role = 'student';
-       session.save();
-       console.log(req.session,'user session');
+      
+       req.session.userid=req.body.rollNo;
+       req.session.role = 'student';
+       console.log('session saved = ',req.session)
 
        res.status(201).json({status:201,studentdata});
      }

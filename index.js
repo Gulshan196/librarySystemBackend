@@ -18,13 +18,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // a variable to save a session
-var session;
 // for session
 app.use(sessions({
   key:"user_sid",
   secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-  saveUninitialized:false,
-  cookie: { maxAge: oneDay },
+  saveUninitialized:true,
+  cookie: { maxAge: oneDay ,
+  secure:false},
   resave: false
 }));
 
@@ -57,7 +57,5 @@ app.use('/student',studentRouter);
 app.listen(process.env.PORT || 8000, () => {
     console.log(`app running on port ${process.env.PORT}`);
   });
-
-  module.exports = session;
   
 
